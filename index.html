@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/@jspsych/plugin-call-function@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
     <script src="https://unpkg.com/@jspsych/plugin-survey@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
 
     <link href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
           rel="stylesheet" type="text/css" />
@@ -48,7 +49,7 @@
     /**********************************************
      * CONFIG
      **********************************************/
-    const SEND_RESULTS = false; // set true if use pipe.jspsych.org
+    const SEND_RESULTS = true; // set true if use pipe.jspsych.org
 
     // Three frequencies for experiment
     const FREQUENCIES = [200, 1000, 4000];
@@ -108,13 +109,13 @@
         a.click();
         document.body.removeChild(a);
 
-        // Optional: send to pipe.jspsych.org
+        // Send to pipe.jspsych.org
         if (SEND_RESULTS) {
           fetch('https://pipe.jspsych.org/api/data', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              experimentID: 'YOUR_EXPERIMENT_ID_HERE',
+              experimentID: 'Cqpxxgj2RZrC',
               filename: filename,
               data: filteredData.csv()
             })
