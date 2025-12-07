@@ -1,0 +1,343 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>Frekvences augstuma un telpiskā novietojuma tests</title>
+
+    <!-- jsPsych core + plugins -->
+    <script src="https://unpkg.com/jspsych@8.2.1"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-html-button-response@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-preload@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-call-function@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey-html-form@2.1.0"></script>
+    <script src="https://unpkg.com/@jspsych/plugin-survey@2.1.0"></script>
+
+    <link href="https://unpkg.com/jspsych@8.2.1/css/jspsych.css"
+          rel="stylesheet" type="text/css" />
+    <link rel="stylesheet"
+          href="https://unpkg.com/@jspsych/plugin-survey@1.0.1/css/survey.css">
+
+    <style>
+      /* Clickable square */
+      #click-area {
+        width: 400px;
+        height: 400px;
+        border: 2px solid #777;
+        background: #ffffff;
+        margin: 30px auto;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        cursor: crosshair;
+        position: relative;
+      }
+      #click-area::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border: 1px dashed #ddd;
+        pointer-events: none;
+      }
+      .center-text {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body></body>
+
+  <script>
+    /**********************************************
+     * CONFIG
+     **********************************************/
+    const SEND_RESULTS = false; // set true if use pipe.jspsych.org
+
+    // Three frequencies for experiment
+    const FREQUENCIES = [200, 1000, 4000];
+    const REPEATS     = 3; // trials per frequency (3 × 3 = 9 trials)
+
+    /**********************************************
+     * Web Audio tone generator
+     **********************************************/
+    function playTone(frequency, duration = 2000) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const audioCtx = new AudioCtx();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.value = frequency;
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      // gentle fade in/out to avoid clicks
+      const now = audioCtx.currentTime;
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(0.2, now + 0.01);
+      gainNode.gain.setValueAtTime(0.2, now + (duration / 1000) - 0.02);
+      gainNode.gain.linearRampToValueAtTime(0, now + (duration / 1000));
+
+      oscillator.start();
+      setTimeout(() => {
+        oscillator.stop();
+        audioCtx.close();
+      }, duration + 50);
+    }
+
+    /**********************************************
+     * jsPsych init
+     **********************************************/
+    const jsPsych = initJsPsych({
+      on_finish: function() {
+        // Filter only the main task data
+        const filteredData = jsPsych.data.get().filterCustom(trial =>
+          trial.task === 'spatial_mapping'
+        );
+
+        const pid = jsPsych.data.get().values()[0].participant_id || '';
+        const filename = `spatial_mapping-${pid}.csv`;
+
+        console.log(filteredData.csv());
+
+        // Download CSV locally
+        const blob = new Blob([filteredData.csv()], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        // Optional: send to pipe.jspsych.org
+        if (SEND_RESULTS) {
+          fetch('https://pipe.jspsych.org/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              experimentID: 'YOUR_EXPERIMENT_ID_HERE',
+              filename: filename,
+              data: filteredData.csv()
+            })
+          }).then(response => {
+            if (!response.ok) {
+              console.error('Datu nosūtīšanas kļūda:', response.statusText);
+            } else {
+              console.log('Dati veiksmīgi nosūtīti uz serveri.');
+            }
+          });
+        }
+      }
+    });
+
+    let timeline = [];
+
+    /**********************************************
+     * 1) Auto-generate participant ID + Start button
+     **********************************************/
+    const iso = new Date().toISOString().slice(0,19);  // "2025-12-07T17:03:50"
+    const clean = iso.replace(/[-:]/g, "").replace("T", ""); 
+    // clean becomes "20251207170350"
+    const datePart = clean.slice(0,8);   // 20251207
+    const timePart = clean.slice(8);     // 170350
+    const participantID = "P_" + datePart + "_" + timePart;
+    jsPsych.data.addProperties({ participant_id: participantID });
+
+    timeline.push({
+        type: jsPsychHtmlButtonResponse,
+        stimulus: `
+            <div class="center-text" style="max-width: 650px; margin: 0 auto; line-height: 1.6;">
+            <h2 style="margin-bottom: 20px;">Frekvences augstuma un telpiskā novietojuma tests</h2>
+
+            <p>
+                Latvijas Universitātes studiju kursa ietvaros tiek veikts pētījums par 
+                <b>skaņas frekvences augstuma</b> un <b>telpiskās novietojuma sajūtas</b> korelāciju.
+            </p>
+
+            <p>
+                Pētījuma laikā Jūs dzirdēsiet <b>9 īsas skaņas</b>. 
+                Pēc katras skaņas Jums būs jāatzīmē kvadrātā <b>vietu, kur Jums šķiet, ka skaņa atrodas</b>. 
+                Pēc klikšķa sekos īsa pauze līdz nākamajai skaņai.
+            </p>
+
+            <p>
+                Eksperimenta izpilde aizņems aptuveni <b>2 minūtes</b>. 
+                Noslēgumā būs jānorāda demogrāfiskā informācija.
+            </p>
+
+            <hr style="margin: 25px 0;">
+
+            <p>
+                Visas sniegtās atbildes ir <b>konfidenciālas</b>. 
+                Iegūtie dati tiks analizēti tikai apkopotā veidā, izslēdzot iespēju identificēt pētījuma dalībniekus. 
+                Dalība pētījumā ir <b>brīvprātīga</b>.
+            </p>
+
+            <p style="margin-top: 20px;">
+                Ar pogas “Sākt” nospiešanu apliecinu, ka esmu izlasījis/-usi sniegto informāciju 
+                un piekrītu piedalīties pētījumā.
+            </p>
+            </div>
+        `,
+        choices: ["Sākt"]
+    });
+
+
+    /**********************************************
+     * 2) 2s blank pause trial (inserted between trials)
+     **********************************************/
+    const pause_2s = {
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: "",
+      choices: "NO_KEYS",
+      trial_duration: 2000 // 2 seconds
+    };
+
+    /**********************************************
+     * 3) Build trials: 3 frekvences × REPEATS (3)
+     **********************************************/
+    const trialSpecs = [];
+    for (let r = 0; r < REPEATS; r++) {
+      FREQUENCIES.forEach(freq => {
+        trialSpecs.push({ frequency: freq });
+      });
+    }
+
+    // Shuffle trials randomly
+    const shuffledTrials = jsPsych.randomization.shuffle(trialSpecs);
+
+    // Create jsPsych trials
+    shuffledTrials.forEach((spec, index) => {
+      const freq = spec.frequency;
+
+      // Main trial: play tone and collect click
+      timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        choices: "NO_KEYS", // trial ends on click, not key
+        stimulus: `
+          <div class="center-text">
+            <p>Pēc skaņas noklausīšanās noklikšķiniet kvadrātā vietu, kur, Jūsuprāt, skaņa atrodas.</p>
+          </div>
+          <div id="click-area"></div>
+        `,
+        data: {
+          task: 'spatial_mapping',
+          trial_number: index + 1,
+          frequency: freq
+        },
+        on_start: function(trial) {
+          // play tone at trial start
+          playTone(freq, 2000); // 2 second tone
+        },
+        on_load: function() {
+          const startTime = performance.now();
+          const area = document.getElementById('click-area');
+
+          area.addEventListener('click', function(e) {
+            const rect = area.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // ignore clicks outside square, just in case
+            if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
+
+            const rt = performance.now() - startTime;
+            const x_norm = x / rect.width;
+            const y_norm = y / rect.height;
+
+            jsPsych.finishTrial({
+              task: 'spatial_mapping',
+              trial_number: index + 1,
+              frequency: freq,
+              click_x_px: x,
+              click_y_px: y,
+              click_x_norm: x_norm,
+              click_y_norm: y_norm,
+              rt_ms: Math.round(rt)
+            });
+          });
+        }
+      });
+
+      // Add 2-second pause AFTER each trial, except the last one
+      if (index < shuffledTrials.length - 1) {
+        timeline.push(pause_2s);
+      }
+    });
+
+    /**********************************************
+     * 4) Short demographic survey
+     **********************************************/
+    timeline.push({
+      type: jsPsychSurvey,
+      survey_json: {
+        showQuestionNumbers: false,
+        title: 'Noslēguma jautājumi',
+        pages: [
+            {
+            elements: [
+              {
+                type: 'radiogroup',
+                name: 'gender',
+                title: 'Lūdzu norādiet savu dzimumu.',
+                choices: ['Sieviete', 'Vīrietis', 'Cits'],
+                isRequired: true
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'text',
+                name: 'age',
+                title: 'Lūdzu norādiet savu vecumu.',
+                inputType: 'number',
+                isRequired: true
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'radiogroup',
+                name: 'hearing',
+                title: 'Vai Jums ir zināmi dzirdes traucējumi?',
+                choices: ['Nē', 'Jā', 'Nezinu'],
+                isRequired: true
+              }
+            ]
+          },
+          {
+        elements: [
+          {
+            type: 'checkbox',
+            name: 'hobbies',
+            title: 'Kādi ir Jūsu hobiji? (Var izvēlēties vairākus)',
+            choices: ['Mūzika', 'Sports', 'Māksla', 'Lasīšana', 'Videospēles'],
+            showOtherItem: true,
+            isRequired: false
+          }
+        ]
+      },
+        ]
+      },
+      on_finish: function(data) {
+        jsPsych.data.addProperties({ demographics: data.response });
+      }
+    });
+
+    /**********************************************
+     * 5) Thank-you screen
+     **********************************************/
+    timeline.push({
+      type: jsPsychHtmlKeyboardResponse,
+      stimulus: '<p style="font-size:24px; text-align:center;">Paldies par dalību!</p>',
+      choices: "NO_KEYS",
+      trial_duration: 1500
+    });
+
+    /**********************************************
+     * 6) Run the experiment
+     **********************************************/
+    jsPsych.run(timeline);
+  </script>
+</html>
