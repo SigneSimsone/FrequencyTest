@@ -21,8 +21,8 @@
     <style>
       /* Clickable square */
       #click-area {
-        width: 400px;
-        height: 400px;
+        width: 600px;
+        height: 600px;
         border: 2px solid #777;
         background: #ffffff;
         margin: 30px auto;
@@ -303,6 +303,17 @@
                 name: 'hearing',
                 title: 'Vai Jums ir zināmi dzirdes traucējumi?',
                 choices: ['Nē', 'Jā', 'Nezinu'],
+                isRequired: true
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'radiogroup',
+                name: 'handedness',
+                title: 'Vai jūs esat labrocis vai kreilis?',
+                choices: ['Labrocis', 'Kreilis'],
                 isRequired: true
               }
             ]
