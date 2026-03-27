@@ -333,9 +333,33 @@
           {
             elements: [
               {
-                type: 'text',
+                type: 'checkbox',
                 name: 'music_education',
-                title: 'Vai Jums ir muzikālā izglītība (pazīstat nošu sistēmu vai protat spēlēt klavieres/citu instrumentu)?',
+                title: 'Vai Jums ir muzikālā izglītība?',
+                choices: ['Jā', 'Nē'],
+                isRequired: true,
+                visibleIf: "{hobbies} contains 'Mūzika'"
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'checkbox',
+                name: 'music_notes',
+                title: 'Vai pazīstat nošu sistēmu?',
+                choices: ['Jā', 'Nē'],
+                isRequired: true,
+                visibleIf: "{hobbies} contains 'Mūzika'"
+              }
+            ]
+          },
+          {
+            elements: [
+              {
+                type: 'text',
+                name: 'music_instrument',
+                title: 'Vai protat spēlēt klavieres vai kādu citu instrumentu?',
                 isRequired: true,
                 visibleIf: "{hobbies} contains 'Mūzika'"
               }
