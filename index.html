@@ -302,7 +302,7 @@
                 type: 'radiogroup',
                 name: 'hearing',
                 title: 'Vai Jums ir zināmi dzirdes traucējumi?',
-                choices: ['Nē', 'Jā', 'Nezinu'],
+                choices: ['Nē', 'Jā'],
                 isRequired: true
               }
             ]
@@ -319,17 +319,28 @@
             ]
           },
           {
-        elements: [
+            elements: [
+              {
+                type: 'checkbox',
+                name: 'hobbies',
+                title: 'Kādi ir Jūsu hobiji? (Var izvēlēties vairākus)',
+                choices: ['Mūzika', 'Sports', 'Māksla', 'Lasīšana', 'Videospēles'],
+                showOtherItem: true,
+                isRequired: true
+              }
+            ]
+          },
           {
-            type: 'checkbox',
-            name: 'hobbies',
-            title: 'Kādi ir Jūsu hobiji? (Var izvēlēties vairākus)',
-            choices: ['Mūzika', 'Sports', 'Māksla', 'Lasīšana', 'Videospēles'],
-            showOtherItem: true,
-            isRequired: false
-          }
-        ]
-      },
+            elements: [
+              {
+                type: 'text',
+                name: 'music_education',
+                title: 'Vai Jums ir muzikālā izglītība (pazīstat nošu sistēmu vai protat spēlēt kādu instrumentu)?',
+                isRequired: true,
+                visibleIf: "{hobbies} contains 'Mūzika'"
+              }
+            ]
+          },
         ]
       },
       on_finish: function(data) {
