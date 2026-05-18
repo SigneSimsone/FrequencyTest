@@ -30,12 +30,13 @@
         cursor: crosshair;
         position: relative;
       }
+      /* ::after overlay draws the inner dashed border without blocking clicks on the parent */
       #click-area::after {
         content: "";
         position: absolute;
-        inset: 0;
+        inset: 0;                /* shorthand for top/right/bottom/left: 0 */
         border: 1px dashed #ddd;
-        pointer-events: none;
+        pointer-events: none;   /* lets mouse clicks pass through to #click-area */
       }
       .center-text {
         text-align: center;
@@ -49,7 +50,7 @@
     /**********************************************
      * CONFIG
      **********************************************/
-    const SEND_RESULTS = true; // set true if use pipe.jspsych.org
+    const SEND_RESULTS = true; // set to false for local testing without uploading data
 
     // Three frequencies for experiment
     const FREQUENCIES = [200, 1000, 4000];
@@ -59,7 +60,7 @@
      * Web Audio tone generator
      **********************************************/
     function playTone(frequency, duration = 2000) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext; // webkitAudioContext is the Safari fallback
       const audioCtx = new AudioCtx();
       const oscillator = audioCtx.createOscillator();
       const gainNode = audioCtx.createGain();
@@ -70,7 +71,7 @@
       oscillator.connect(gainNode);
       gainNode.connect(audioCtx.destination);
 
-      // gentle fade in/out to avoid clicks
+      // fade in over 10 ms and fade out over 20 ms to prevent audible click/pop at start and end
       const now = audioCtx.currentTime;
       gainNode.gain.setValueAtTime(0, now);
       gainNode.gain.linearRampToValueAtTime(0.2, now + 0.01);
@@ -80,7 +81,7 @@
       oscillator.start();
       setTimeout(() => {
         oscillator.stop();
-        audioCtx.close();
+        audioCtx.close(); // 50 ms buffer so the fade-out finishes before the context is destroyed
       }, duration + 50);
     }
 
@@ -89,7 +90,7 @@
      **********************************************/
     const jsPsych = initJsPsych({
       on_finish: function() {
-        // Filter only the main task data
+        // Keep only spatial mapping trials; excludes jsPsych's own internal trial records
         const filteredData = jsPsych.data.get().filterCustom(trial =>
           trial.task === 'spatial_mapping'
         );
@@ -135,9 +136,9 @@
     /**********************************************
      * 1) Auto-generate participant ID + Start button
      **********************************************/
+    // Participant ID is timestamp-based (e.g. P_20251207_170350) — no personal data stored
     const iso = new Date().toISOString().slice(0,19);  // "2025-12-07T17:03:50"
-    const clean = iso.replace(/[-:]/g, "").replace("T", ""); 
-    // clean becomes "20251207170350"
+    const clean = iso.replace(/[-:]/g, "").replace("T", "");  // strip separators → "20251207170350"
     const datePart = clean.slice(0,8);   // 20251207
     const timePart = clean.slice(8);     // 170350
     const participantID = "P_" + datePart + "_" + timePart;
@@ -230,7 +231,7 @@
           playTone(freq, 2000); // 2 second tone
         },
         on_load: function() {
-          const startTime = performance.now();
+          const startTime = performance.now(); // performance.now() has sub-millisecond precision; Date.now() is only millisecond-accurate
           const area = document.getElementById('click-area');
 
           area.addEventListener('click', function(e) {
@@ -238,7 +239,7 @@
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
 
-            // ignore clicks outside square, just in case
+            // guard against clicks that land on the border or scroll into negative coords
             if (x < 0 || y < 0 || x > rect.width || y > rect.height) return;
 
             const rt = performance.now() - startTime;
@@ -368,6 +369,7 @@
         ]
       },
       on_finish: function(data) {
+        // addProperties appends demographics as a column to every previously-recorded trial row
         jsPsych.data.addProperties({ demographics: data.response });
       }
     });
