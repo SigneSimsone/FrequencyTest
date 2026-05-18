@@ -1,0 +1,7 @@
+axis,freq1_hz,freq2_hz,wilcoxon_W,p_value,cohens_d
+Y (vertical),200,1000,3.0,0.0,1.817
+Y (vertical),1000,4000,0.0,0.0,1.963
+Y (vertical),200,4000,0.0,0.0,3.914
+X (horizontal),200,1000,248.0,0.0288,0.296
+X (horizontal),1000,4000,306.0,0.2411,0.163
+X (horizontal),200,4000,235.0,0.0178,0.448
