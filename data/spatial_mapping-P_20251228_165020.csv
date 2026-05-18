@@ -1,0 +1,10 @@
+task,trial_number,frequency,click_x_norm,click_y_norm,rt_ms,trial_type,trial_index,plugin_version,time_elapsed,participant_id,demographics
+spatial_mapping,1,1000,0.5056877890227411,0.4565111076415018,5352,html-keyboard-response,1,2.1.0,11890,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,2,200,0.2255886509886722,0.9299530135220964,5107,html-keyboard-response,3,2.1.0,19040,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,3,4000,0.5428690905316884,0.0499955444770123,2382,html-keyboard-response,5,2.1.0,23452,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,4,1000,0.5156028027584604,0.4118935458307651,2771,html-keyboard-response,7,2.1.0,28240,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,5,200,0.2181523906868828,0.9473042875596048,2768,html-keyboard-response,9,2.1.0,33029,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,6,1000,0.4982515287209517,0.4565111076415018,2468,html-keyboard-response,11,2.1.0,37500,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,7,200,0.3272175417797945,0.905165479182798,2314,html-keyboard-response,13,2.1.0,41840,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,8,4000,0.8824583109800729,0.0351230238734334,3338,html-keyboard-response,15,2.1.0,47182,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"
+spatial_mapping,9,4000,0.7659568995853716,0.0574318047788018,1638,html-keyboard-response,17,2.1.0,50848,P_20251228_165020,"{""gender"":""Vīrietis"",""age"":26,""hearing"":""Nē"",""hobbies"":[""Māksla""]}"

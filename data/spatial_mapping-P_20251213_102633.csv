@@ -1,0 +1,10 @@
+task,trial_number,frequency,click_x_norm,click_y_norm,rt_ms,trial_type,trial_index,plugin_version,time_elapsed,participant_id,demographics
+spatial_mapping,1,1000,0.7029702970297029,0.1745049504950495,5062,html-keyboard-response,1,2.1.0,6388,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,2,4000,0.7871287128712872,0.1448019801980198,3594,html-keyboard-response,3,2.1.0,11988,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,3,200,0.047029702970297,0.959158415841584,3995,html-keyboard-response,5,2.1.0,17988,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,4,4000,0.7871287128712872,0.1448019801980198,2044,html-keyboard-response,7,2.1.0,22037,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,5,4000,0.7772277227722773,0.1571782178217821,2529,html-keyboard-response,9,2.1.0,26571,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,6,1000,0.495049504950495,0.5136138613861386,3077,html-keyboard-response,11,2.1.0,31654,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,7,1000,0.5346534653465347,0.5037128712871287,2195,html-keyboard-response,13,2.1.0,35854,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,8,200,0.448019801980198,0.879950495049505,3463,html-keyboard-response,15,2.1.0,41323,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"
+spatial_mapping,9,200,0.4331683168316831,0.8774752475247525,2062,html-keyboard-response,17,2.1.0,45392,P_20251213_102633,"{""gender"":""Sieviete"",""age"":27,""hearing"":""Nē"",""hobbies"":[""Mūzika"",""Sports""]}"

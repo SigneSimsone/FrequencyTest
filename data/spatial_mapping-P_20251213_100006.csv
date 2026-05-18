@@ -1,0 +1,10 @@
+task,trial_number,frequency,click_x_norm,click_y_norm,rt_ms,trial_type,trial_index,plugin_version,time_elapsed,participant_id,demographics
+spatial_mapping,1,4000,0.4709852409477237,0.0103354895341353,10099,html-keyboard-response,1,2.1.0,96542,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,2,200,0.5403903370977585,0.8605479173720615,6319,html-keyboard-response,3,2.1.0,104903,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,3,1000,0.6395404744549511,0.2557320794931869,6559,html-keyboard-response,5,2.1.0,113500,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,4,1000,0.6395404744549511,0.2557320794931869,2714,html-keyboard-response,7,2.1.0,118249,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,5,1000,0.2652487059315492,0.1937632436449415,4648,html-keyboard-response,9,2.1.0,124912,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,6,200,0.8700645438104238,0.7217377250719919,4559,html-keyboard-response,11,2.1.0,131504,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,7,4000,0.7808294201889505,0.0202505032698546,3574,html-keyboard-response,13,2.1.0,137093,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,8,200,0.3941438844958995,0.7886640677880968,3950,html-keyboard-response,15,2.1.0,143068,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
+spatial_mapping,9,4000,0.1685773220082865,0.0202505032698546,2514,html-keyboard-response,17,2.1.0,147595,P_20251213_100006,"{""gender"":""Sieviete"",""age"":33,""hearing"":""Nē"",""hobbies"":[""Sports""]}"
